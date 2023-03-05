@@ -1,0 +1,61 @@
+<form class="search" (ngSubmit)="search()" [formGroup]="form">
+    <mat-form-field appearance="fill">
+        <mat-label>Employee Name</mat-label>
+        <mat-select formControlName="id">
+            <mat-option value="">Select</mat-option>
+            <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.id}} -
+                {{employee.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Leave Duration</mat-label>
+        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+            <input matStartDate formControlName="from" placeholder="Start date">
+            <input matEndDate formControlName="to" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="form.controls['from'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="form.controls['to'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+    </mat-form-field>
+    <button mat-flat-button (click)="form.reset()">Cancel</button>
+    <button mat-flat-button type="submit" color="primary" [disabled]="form.invalid">Search</button>
+    <figure id="bar"></figure>
+
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Leave Id</th>
+            <th scope="col">Employeee Name</th>
+            <th scope="col">Leave Type</th>
+            <th scope="col">Duration</th>
+            <th scope="col">From</th>
+            <th scope="col">Till</th>
+            <th scope="col">Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let leave of leaves">
+            <tr>
+                <th scope="row">{{leave.id}}</th>
+                <td>{{leave.employeeDTO.name}}</td>
+                <td>{{leave.leaveTypeDTO.name}}</td>
+                <td>{{leave.numberOfDays}}</td>
+                <td>{{leave.from}}</td>
+                <td>{{leave.to}}</td>
+                <td>{{leave.note}}</td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>
+
+<div class="float-button">
+    <button mat-mini-fab color="primary" (click)="createLeave()" aria-label="Example icon button with a menu icon">
+        <i class="las la-user-plus"></i>
+    </button>
+</div>

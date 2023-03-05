@@ -1,0 +1,77 @@
+<form [formGroup]="form">
+    <h1 mat-dialog-title>{{data.id?'':'Create'}} Claim Request : {{data.id}}</h1>
+    <div mat-dialog-content>
+        <p *ngIf="!data.id">Please fill the below form</p>
+        <div class="flex-row">
+            <mat-form-field appearance="fill">
+                <mat-label>Employee Name</mat-label>
+                <mat-select formControlName="employeeDTO">
+                    <mat-option value="">Select</mat-option>
+                    <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.id}} -
+                        {{employee.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Claim Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill" style="width:100%">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+
+        <div class="flex-row-sb">
+            <div>Expenses:</div>
+            <button *ngIf="!data.id" mat-icon-button (click)="addNewExpense()">
+                <i class="las la-plus"></i>
+            </button>
+        </div>
+
+        <div formArrayName="expenseClaimDetailDTOList">
+            <div *ngFor="let expense of getExpensesForm().controls; let i=index">
+                <div class="flex-row" [formGroupName]="i">
+                    {{i+1}}
+                    <mat-form-field appearance="fill">
+                        <mat-label>Expense Types</mat-label>
+                        <mat-select formControlName="type">
+                            <mat-option value="">Select</mat-option>
+                            <mat-option *ngFor="let expenseType of expenseTypes"
+                                [value]="expenseType.value">{{expenseType.label}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Paid On</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field style="width:25%" appearance="fill">
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="description">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Amount</mat-label>
+                        <input matInput type="number" formControlName="total">
+                    </mat-form-field>
+
+                    <button *ngIf="i!==0&&!data.id" mat-icon-button (click)="removeExpense(i)">
+                        <i class="las la-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="!data.id" mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button [disabled]="form.invalid" [mat-dialog-close]="form.value" cdkFocusInitial>Save</button>
+    </div>
+
+</form>

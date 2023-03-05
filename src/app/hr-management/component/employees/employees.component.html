@@ -1,0 +1,32 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Department</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let employee of employees">
+            <tr>
+                <th scope="row">{{employee.name}}</th>
+                <td>{{employee.email}}</td>
+                <td>{{employee.address}}</td>
+                <td>{{employee.departmentName}}</td>
+                <td (click)="editEmployee(employee)">
+                    <i class="las la-pen"></i>
+
+                </td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>
+
+<div class="float-button">
+    <button mat-mini-fab color="primary" (click)="createEmployee()" aria-label="Example icon button with a menu icon">
+        <i class="las la-user-plus"></i>
+    </button>
+</div>

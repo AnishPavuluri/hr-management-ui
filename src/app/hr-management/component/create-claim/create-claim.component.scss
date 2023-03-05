@@ -1,0 +1,17 @@
+:host {
+    padding: 20px 0;
+
+    .flex-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .flex-row-sb {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: black;
+    }
+}

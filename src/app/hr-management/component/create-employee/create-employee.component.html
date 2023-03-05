@@ -1,0 +1,30 @@
+<form [formGroup]="form">
+  <h1 mat-dialog-title>{{data.id? 'Edit':'Add'}} Employee</h1>
+  <div mat-dialog-content>
+    <p>Please fill the below form</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Department</mat-label>
+      <mat-select formControlName="departmentId">
+        <mat-option value="">Select</mat-option>
+        <mat-option *ngFor="let department of departments" [value]="department.id">{{department.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [disabled]="form.invalid" [mat-dialog-close]="form.value" cdkFocusInitial>Save</button>
+  </div>
+
+</form>
